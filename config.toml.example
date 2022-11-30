@@ -1,0 +1,5 @@
+# URL to the advenet of code website
+url="https://adventofcode.com"
+
+# Your cookie for the Advent of Code website
+#session="abc123"
