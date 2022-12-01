@@ -1,25 +1,40 @@
-pub fn parse(input: &str) -> Vec<usize> {
-    input
-        .split("\n\n")
-        .map(|elf_calories| {
-            elf_calories
-                .lines()
-                .map(|calories| calories.parse::<usize>().unwrap())
-                .sum()
-        })
-        .collect()
+use std::collections::BinaryHeap;
+
+pub fn parse(input: &str) -> Vec<u64> {
+    let mut data = Vec::with_capacity(100);
+    let mut lines = input.lines();
+
+    'outer: loop {
+        let mut elf_calories = 0;
+        loop {
+            match lines.next() {
+                None => {
+                    data.push(elf_calories);
+                    break 'outer;
+                }
+                Some("") => {
+                    data.push(elf_calories);
+                    break;
+                }
+                Some(snack) => elf_calories += snack.parse::<u64>().unwrap(),
+            }
+        }
+    }
+
+    data
 }
 
-pub fn part1(input: &str) -> usize {
+pub fn part1(input: &str) -> u64 {
     let data = parse(input);
     data.into_iter().max().unwrap_or(0)
 }
 
-pub fn part2(input: &str) -> usize {
-    let mut data = parse(input);
-    data.sort();
-    data.reverse();
-    data[..3].iter().copied().sum()
+pub fn part2(input: &str) -> u64 {
+    let mut data = BinaryHeap::from(parse(input));
+    [data.pop(), data.pop(), data.pop()]
+        .into_iter()
+        .flatten()
+        .sum()
 }
 
 #[cfg(test)]
