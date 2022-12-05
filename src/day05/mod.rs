@@ -1,3 +1,5 @@
+use crate::util::get_2_mut;
+
 pub type Crate = u8;
 
 pub struct Input {
@@ -50,10 +52,10 @@ pub fn parse(input: &str) -> Input {
 pub fn part1(input: &str) -> String {
     let mut input = parse(input);
     for Instruction { amount, from, to } in input.instructions {
-        for _ in 0..amount {
-            let item = input.stacks[from].pop().expect("Stack was empty :(");
-            input.stacks[to].push(item);
-        }
+        let [from, to] = get_2_mut(&mut input.stacks, from, to);
+        let start = from.len() - amount;
+        from[start..].reverse();
+        to.extend(from.drain(start..));
     }
 
     display_stacks(&input.stacks)
@@ -62,18 +64,10 @@ pub fn part1(input: &str) -> String {
 pub fn part2(input: &str) -> String {
     let mut input = parse(input);
 
-    fn move_crate(stacks: &mut Vec<Vec<Crate>>, from: usize, to: usize, amount: usize) {
-        if amount == 0 {
-            return;
-        }
-
-        let item = stacks[from].pop().expect("Stack was empty :(");
-        move_crate(stacks, from, to, amount - 1);
-        stacks[to].push(item);
-    }
-
     for Instruction { amount, from, to } in input.instructions {
-        move_crate(&mut input.stacks, from, to, amount);
+        let [from, to] = get_2_mut(&mut input.stacks, from, to);
+        let start = from.len() - amount;
+        to.extend(from.drain(start..));
     }
 
     display_stacks(&input.stacks)
