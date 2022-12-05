@@ -37,7 +37,7 @@ dependencies = [
 
 [[package]]
 name = "aoc_2022"
-version = "0.0.0"
+version = "5.0.0"
 dependencies = [
  "aoc_helpers",
  "aoc_macro",
