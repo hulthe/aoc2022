@@ -1,7 +1,5 @@
-use hashers::fx_hash::FxHasher;
-use std::{hash::BuildHasherDefault, iter::Peekable};
-
-type HashMap<K, V> = std::collections::HashMap<K, V, BuildHasherDefault<FxHasher>>;
+use crate::util::HashMap;
+use std::iter::Peekable;
 
 #[derive(Debug)]
 pub enum DirEntry<'a> {
