@@ -1,6 +1,6 @@
 [package]
 name = "aoc_2022"
-version = "5.0.0"
+version = "9.0.0"
 authors = ["Joakim Hulthe <joakim@hulthe.net>"]
 description = "Solver for Advent of Code 2022"
 edition = "2021"
