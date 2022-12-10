@@ -48,10 +48,12 @@ pub fn part1(input: &str) -> i32 {
     sum
 }
 
+pub const CRT_W: usize = 40;
+pub const CRT_H: usize = 6;
+pub const CRT_LETTER_W: usize = CRT_W / 8;
+
 pub fn part2(input: &str) -> String {
     let instructions = parse(input);
-    const CRT_W: usize = 40;
-    const CRT_H: usize = 6;
     let mut crt_out = String::with_capacity((CRT_W + 1) * CRT_H);
     let mut crt_x: usize = 0;
     let mut reg_x: i32 = 1;
@@ -77,8 +79,71 @@ pub fn part2(input: &str) -> String {
         }
     }
 
-    crt_out
+    parse_crt(crt_out)
 }
+
+/// Try to parse the output of the CRT display as text
+fn parse_crt(crt: String) -> String {
+    let mut parsed = String::with_capacity(8);
+    'crt: for start in (0..CRT_W).step_by(CRT_LETTER_W) {
+        'letters: for &(letter, bitmap) in BITMAPS {
+            for (crt_line, bitmap_line) in crt.lines().zip(bitmap.lines()) {
+                let x_range = start..start + CRT_LETTER_W;
+                if &crt_line[x_range] != bitmap_line {
+                    continue 'letters;
+                }
+            }
+
+            parsed.push(letter);
+            continue 'crt;
+        }
+
+        // failed to parse letter, give up and return crt output
+        return crt;
+    }
+
+    parsed
+}
+
+/// Bitmaps representing the CRT font
+const BITMAPS: &[(char, &str)] = &[
+    (
+        'F',
+        "####.\n\
+         #....\n\
+         ###..\n\
+         #....\n\
+         #....\n\
+         #....",
+    ),
+    (
+        'Z',
+        "####.\n\
+         ...#.\n\
+         ..#..\n\
+         .#...\n\
+         #....\n\
+         ####.",
+    ),
+    (
+        'B',
+        "###..\n\
+         #..#.\n\
+         ###..\n\
+         #..#.\n\
+         #..#.\n\
+         ###..",
+    ),
+    (
+        'P',
+        "###..\n\
+         #..#.\n\
+         #..#.\n\
+         ###..\n\
+         #....\n\
+         #....",
+    ),
+];
 
 #[cfg(test)]
 mod tests {
