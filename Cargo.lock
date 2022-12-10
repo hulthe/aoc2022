@@ -51,8 +51,8 @@ dependencies = [
 
 [[package]]
 name = "aoc_helpers"
-version = "1.0.1"
-source = "git+https://github.com/hulthe/aoc_boiler.git#6900a23a6c12111e5e1c83f054b940fa142e4d0b"
+version = "1.0.2"
+source = "git+https://github.com/hulthe/aoc_boiler.git#0568b7936103748470fc34b7aab9bcc98159cff4"
 dependencies = [
  "anyhow",
  "clap",
@@ -70,7 +70,7 @@ dependencies = [
 [[package]]
 name = "aoc_macro"
 version = "1.0.1"
-source = "git+https://github.com/hulthe/aoc_boiler.git#6900a23a6c12111e5e1c83f054b940fa142e4d0b"
+source = "git+https://github.com/hulthe/aoc_boiler.git#0568b7936103748470fc34b7aab9bcc98159cff4"
 dependencies = [
  "proc-macro2",
  "quote",
